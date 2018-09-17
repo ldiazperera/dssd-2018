@@ -1,6 +1,4 @@
-# dssd-2018
-
-Desarrollo de Software en Sistemas Distribuidos
+# Desarrollo de Software en Sistemas Distribuidos 2018
 
 Brocchi, Ignacio
 Díaz Perera, Lucas
