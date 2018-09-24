@@ -1,1 +1,8 @@
-/target/
+**/bin*
+**/target*
+**/.classpath
+**/.settings
+**/*.orig
+**/.project
+**/.idea
+**/.DS_Store

@@ -2,12 +2,11 @@ package ar.edu.unlp.info.dssd.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 
 @Entity
 public class Product {
@@ -19,16 +18,15 @@ public class Product {
 	@Column(name="name", nullable = false)
 	private String name;
 	
-	@Column(name="costprice", nullable = false)
+	@Column(name="cost_price", nullable = false)
 	private Double costprice;
 
-	@Column(name="saleprice", nullable = false)
+	@Column(name="sale_price", nullable = false)
 	private Double saleprice;
 	
-	@Column(name="productType", nullable = false)
 	@ManyToOne
+	@JoinColumn(name="product_type_fk")
 	private ProductType productType;
-
 	
 	public Product(){
 		//Default constructor
@@ -73,6 +71,5 @@ public class Product {
 	public void setProductType(ProductType productType) {
 		this.productType = productType;
 	}
-	
-	
+
 }

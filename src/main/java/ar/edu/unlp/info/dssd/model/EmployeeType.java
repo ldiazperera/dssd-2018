@@ -9,7 +9,8 @@ import javax.persistence.Id;
 @Entity
 public class EmployeeType {
 
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false)
 	private Long id;
 	
@@ -19,7 +20,9 @@ public class EmployeeType {
 	@Column(name = "description", nullable = false)
 	private String description;
 	
-	public EmployeeType(){}
+	public EmployeeType(){
+		//Default constructor
+	}
 
 	public Long getId() {
 		return id;
@@ -43,7 +46,6 @@ public class EmployeeType {
 
 	public void setDescription(String description) {
 		this.description = description;
-	};
-	
+	}
 	
 }

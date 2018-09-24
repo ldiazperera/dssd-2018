@@ -9,7 +9,8 @@ import javax.persistence.Id;
 @Entity
 public class ProductType {
 
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false)
 	private Long id;
 	
@@ -47,6 +48,4 @@ public class ProductType {
 		this.description = description;
 	}
 	
-	
-
 }
