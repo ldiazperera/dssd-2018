@@ -7,22 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.unlp.info.dssd.model.Employee;
-import ar.edu.unlp.info.dssd.repository.EmployeeRepository;
+import ar.edu.unlp.info.dssd.model.Product;
+import ar.edu.unlp.info.dssd.repository.ProductRepository;
 
 @Service
-public class EmployeeService implements BasicService<Employee> {
+public class ProductService implements BasicService<Product>{
 	
 	@Autowired
-	private EmployeeRepository repository;
+	private ProductRepository repository;
 	
 	@Transactional(readOnly = true)
-	public List<Employee> getAll(){
+	public List<Product> getAll(){
 		return this.repository.findAll();
 	}
 	
 	@Transactional(readOnly = true)
-	public Optional<Employee> getById(String id) {
+	public Optional<Product> getById(String id) {
 		return this.repository.findById(Long.parseLong(id));
 	}
 
@@ -33,17 +33,17 @@ public class EmployeeService implements BasicService<Employee> {
 	}
 
 	@Override
-	public void create(Employee element) {
+	public void create(Product element) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(String id, Employee element) {
+	public void update(String id, Product element) {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 	@Override
 	@Transactional
 	public void deleteAll() {

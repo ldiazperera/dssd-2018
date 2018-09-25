@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ar.edu.unlp.info.dssd.model.Employee;
-import ar.edu.unlp.info.dssd.service.EmployeeService;
+import ar.edu.unlp.info.dssd.model.Product;
+import ar.edu.unlp.info.dssd.service.ProductService;
 
 @Controller
-@RequestMapping(value = "/employees")
-public class EmployeeController {
+@RequestMapping(value = "/products")
+public class ProductController {
 	
 	@Autowired
-	private EmployeeService service;
+	private ProductService service;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Employee>> getEmployees() {
+	public ResponseEntity<List<Product>> getEmployees() {
 		return new ResponseEntity<>(this.service.getAll(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Employee> getAllEmployees(@PathVariable String id) {
+	public ResponseEntity<Product> getProductById(@PathVariable String id) {
 		return this.service.getById(id)
-				.map(employee -> new ResponseEntity<>(employee, HttpStatus.OK))
+				.map(product -> new ResponseEntity<>(product, HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
