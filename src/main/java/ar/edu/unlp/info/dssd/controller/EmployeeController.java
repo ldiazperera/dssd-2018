@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ar.edu.unlp.info.dssd.model.Employee;
 import ar.edu.unlp.info.dssd.service.EmployeeService;
@@ -31,5 +32,12 @@ public class EmployeeController {
 				.map(employee -> new ResponseEntity<>(employee, HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
+	
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteEmployee(@PathVariable String id) {
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	
 
 }
