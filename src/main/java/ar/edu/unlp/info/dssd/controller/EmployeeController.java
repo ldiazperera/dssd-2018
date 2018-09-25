@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,6 +39,15 @@ public class EmployeeController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public HttpStatus addEmployee(@RequestBody Employee employee) {
+		this.service.create(employee);
+		List<Employee> employeeList = this.service.getAll();
+		if (employeeList.contains(employee)) {
+			return HttpStatus.CREATED;
+		} else {
+			return HttpStatus.BAD_REQUEST;
+		}
+	}
 
 }
