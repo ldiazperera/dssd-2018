@@ -34,8 +34,7 @@ public class EmployeeService implements BasicService<Employee> {
 
 	@Override
 	public void create(Employee element) {
-		// TODO Auto-generated method stub
-		
+		this.repository.save(element);		
 	}
 
 	@Override
