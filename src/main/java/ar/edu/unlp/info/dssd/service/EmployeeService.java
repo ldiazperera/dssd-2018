@@ -1,5 +1,7 @@
 package ar.edu.unlp.info.dssd.service;
 
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -39,8 +41,9 @@ public class EmployeeService implements BasicService<Employee> {
 
 	@Override
 	public void update(String id, Employee element) {
-		// TODO Auto-generated method stub
-		
+		// TODO: hay que usar otro metodo. No esta usando el id con save. 
+		// Crea uno nuevo si el id del body no existe.
+		this.repository.save(element);
 	}
 	
 	@Override
