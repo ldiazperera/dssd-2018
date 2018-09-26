@@ -34,12 +34,12 @@ public class EmployeeController {
 				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 	
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteEmployee(@PathVariable String id) {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public HttpStatus addEmployee(@RequestBody Employee employee) {
 		this.service.create(employee);
 		List<Employee> employeeList = this.service.getAll();
