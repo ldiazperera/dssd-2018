@@ -41,7 +41,6 @@ public class EmployeeService implements BasicService<Employee> {
 	}
 
 	@Override
-	@Transactional
 	public Employee create(Employee employee) {
 		return this.repository.save(employee);		
 	}

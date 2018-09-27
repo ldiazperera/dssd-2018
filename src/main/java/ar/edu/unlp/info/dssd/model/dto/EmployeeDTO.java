@@ -1,6 +1,7 @@
 package ar.edu.unlp.info.dssd.model.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class EmployeeDTO {
 	
@@ -16,7 +17,7 @@ public class EmployeeDTO {
 	@NotBlank
 	private String password;
 
-	@NotBlank
+	@NotNull
 	private long employeeType;
 
 	public String getFirstname() {

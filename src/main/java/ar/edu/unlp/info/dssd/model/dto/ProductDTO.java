@@ -1,6 +1,7 @@
 package ar.edu.unlp.info.dssd.model.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class ProductDTO {
 	
@@ -13,7 +14,7 @@ public class ProductDTO {
 	@NotBlank
 	private Double saleprice;
 	
-	@NotBlank
+	@NotNull
 	private long productType;
 
 	public String getName() {
