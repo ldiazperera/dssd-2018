@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import ar.edu.unlp.info.dssd.model.dto.EmployeeDTO;
+
 @Entity
 public class Employee implements Serializable{
 		
@@ -39,7 +41,14 @@ public class Employee implements Serializable{
 		public Employee() {
 			// Default constructor
 		}
-
+		
+		public Employee(EmployeeDTO employee) {
+			this.firstname = employee.getFirstname();
+			this.surname = employee.getSurname();
+			this.email = employee.getEmail();
+			this.password = employee.getPassword();
+		}
+		
 		public Long getId() {
 			return id;
 		}

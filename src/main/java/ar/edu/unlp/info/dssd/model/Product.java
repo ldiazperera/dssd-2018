@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import ar.edu.unlp.info.dssd.model.dto.ProductDTO;
+
 @Entity
 public class Product {
 	
@@ -32,6 +34,12 @@ public class Product {
 		//Default constructor
 	}
 	
+	public Product(ProductDTO product) {
+		this.name = product.getName();
+		this.costprice = product.getCostprice();
+		this.saleprice = product.getSaleprice();
+	}
+
 	public Long getId() {
 		return id;
 	}

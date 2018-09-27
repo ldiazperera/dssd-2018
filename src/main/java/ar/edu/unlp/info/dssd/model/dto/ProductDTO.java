@@ -1,13 +1,19 @@
 package ar.edu.unlp.info.dssd.model.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class ProductDTO {
 	
+	@NotBlank
 	private String name;
 	
+	@NotBlank
 	private Double costprice;
 
+	@NotBlank
 	private Double saleprice;
 	
+	@NotBlank
 	private long productType;
 
 	public String getName() {

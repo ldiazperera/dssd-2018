@@ -12,9 +12,9 @@ public interface BasicService<T> {
 	
 	void deleteById(String id);
 	
-	void create(T element);
+	T create(T element);
 	
-	void update(String id, T element);
+	T update(String id, T element);
 	
 	void deleteAll();
 	
