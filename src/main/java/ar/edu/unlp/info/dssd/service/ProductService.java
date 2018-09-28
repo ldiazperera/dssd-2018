@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unlp.info.dssd.exceptions.NoElementFoundException;
 import ar.edu.unlp.info.dssd.model.Product;
 import ar.edu.unlp.info.dssd.model.ProductType;
 import ar.edu.unlp.info.dssd.model.dto.ProductDTO;
@@ -28,14 +29,21 @@ public class ProductService implements BasicService<Product>{
 	}
 	
 	@Transactional(readOnly = true)
-	public Optional<Product> getById(String id) {
-		return this.productRepository.findById(Long.parseLong(id));
+	public Optional<Product> getById(String id) throws NoElementFoundException {
+		Optional<Product> product = this.productRepository.findById(Long.parseLong(id));
+		if (product.isPresent())
+				return product ;
+		else
+			throw new NoElementFoundException("Elemento no encontrado");
 	}
 
 	@Override
 	@Transactional
-	public void deleteById(String id) {
-		this.productRepository.deleteById(Long.parseLong(id));
+	public void deleteById(String id) throws NoElementFoundException {
+		if(this.productRepository.findById(Long.parseLong(id)).isPresent())
+			this.productRepository.deleteById(Long.parseLong(id));
+		else
+			throw new NoElementFoundException("Elemento no encontrado");
 	}
 
 	@Override
@@ -57,12 +65,13 @@ public class ProductService implements BasicService<Product>{
 
 	@Override
 	@Transactional
-	public Product update(String id, Product product) {
+	public Product update(String id, Product product) throws NoElementFoundException {
 		if (this.productRepository.existsById(Long.parseLong(id))) {
 			product.setId(Long.parseLong(id));
 			return this.productRepository.save(product);
+		}else{
+			throw new NoElementFoundException("Elemento no encontrado");
 		}
-		return null;
 	}
 
 	@Override

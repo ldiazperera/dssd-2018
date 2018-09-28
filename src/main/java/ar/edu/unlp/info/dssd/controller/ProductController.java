@@ -11,11 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ar.edu.unlp.info.dssd.exceptions.NoElementFoundException;
 import ar.edu.unlp.info.dssd.model.Product;
 import ar.edu.unlp.info.dssd.model.dto.ProductDTO;
 import ar.edu.unlp.info.dssd.service.ProductService;
@@ -37,7 +39,7 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Product> getProductById(@PathVariable String id) {
+	public ResponseEntity<Product> getProductById(@PathVariable String id) throws NoElementFoundException {
 		return this.service.getById(id)
 				.map(product -> new ResponseEntity<>(product, HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -54,15 +56,15 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product product) {
+	public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product product) throws NoElementFoundException {
 		this.service.update(id, product);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Product> deleteProductById(@PathVariable String id) {
+	public ResponseEntity<Product> deleteProductById(@PathVariable String id) throws NoElementFoundException {
 		this.service.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
+	
 }
