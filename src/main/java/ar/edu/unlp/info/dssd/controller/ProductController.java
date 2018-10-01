@@ -29,8 +29,6 @@ public class ProductController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
-	private static final String ARGUMENTS_MISSING_ERROR = "Unos o más campos obligatorios están vacíos";
-
 	@Autowired
 	private ProductService service;
 
