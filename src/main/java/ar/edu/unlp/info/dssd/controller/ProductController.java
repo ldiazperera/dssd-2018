@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ar.edu.unlp.info.dssd.exceptions.MissingArgumentException;
 import ar.edu.unlp.info.dssd.exceptions.NoElementFoundException;
 import ar.edu.unlp.info.dssd.model.Product;
 import ar.edu.unlp.info.dssd.model.dto.ProductDTO;
@@ -44,18 +45,19 @@ public class ProductController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductDTO product, BindingResult bindingResult) throws NoElementFoundException {
+	public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductDTO product, BindingResult bindingResult) throws NoElementFoundException, MissingArgumentException {
 		if (bindingResult.hasErrors()) {
-			LOGGER.error(ARGUMENTS_MISSING_ERROR);
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			throw new MissingArgumentException();
 		}
 		return new ResponseEntity<>(this.service.create(product), HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product product) throws NoElementFoundException {
-		this.service.update(id, product);
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody @Valid ProductDTO product, BindingResult bindingResult) throws NoElementFoundException, MissingArgumentException {
+		if (bindingResult.hasErrors()) {
+			throw new MissingArgumentException();
+		}
+		return new ResponseEntity<>(this.service.update(id, product), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -68,6 +70,12 @@ public class ProductController {
     public ResponseEntity <String> exception(Exception ex) {
         LOGGER.error(ex.getMessage(), ex);
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+    
+	@ExceptionHandler(MissingArgumentException.class)
+    public ResponseEntity <String> missingArgumentException(Exception ex) {
+        LOGGER.error(ex.getMessage(), ex);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 	
 }

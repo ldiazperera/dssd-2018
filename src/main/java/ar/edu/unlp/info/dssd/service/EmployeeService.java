@@ -53,7 +53,7 @@ public class EmployeeService implements BasicService<Employee> {
 	}
 
 	@Override
-	public Employee create(Employee employee) {
+	public Employee save(Employee employee) {
 		return this.repository.save(employee);		
 	}
 	
@@ -63,19 +63,25 @@ public class EmployeeService implements BasicService<Employee> {
 		Optional<EmployeeType> et = this.employeeTypeRepository.findById(employee.getEmployeeType());
 		if (et.isPresent()) {
 			emp.setEmployeeType(et.get());
-			return this.create(emp);
+			return this.save(emp);
 		}else {
 			throw new NoElementFoundException(TYPE_RESOURCE, Long.toString(employee.getEmployeeType()));
 		}
 	}
 
-	@Override
 	@Transactional
-	public Employee update(String id, Employee employee) throws NoElementFoundException {
+	public Employee update(String id, EmployeeDTO employee) throws NoElementFoundException {
+		Employee emp = new Employee(employee);
 		if (this.repository.existsById(Long.parseLong(id))) {
-			employee.setId(Long.parseLong(id));
-			return this.repository.save(employee);
-		}else {
+			emp.setId(Long.parseLong(id));
+			Optional<EmployeeType> pt = this.employeeTypeRepository.findById(employee.getEmployeeType());
+			if (pt.isPresent()) {
+				emp.setEmployeeType(pt.get());
+				return this.save(emp);
+			}else {
+				throw new NoElementFoundException(TYPE_RESOURCE, Long.toString(employee.getEmployeeType()));
+			}
+		}else{
 			throw new NoElementFoundException(RESOURCE, id);
 		}
 	}

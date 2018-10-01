@@ -13,9 +13,7 @@ public interface BasicService<T> {
 	
 	void deleteById(String id) throws NoElementFoundException;
 	
-	T create(T element) throws NoElementFoundException;
-	
-	T update(String id, T element) throws NoElementFoundException;
+	T save(T element) throws NoElementFoundException;
 	
 	void deleteAll();
 	

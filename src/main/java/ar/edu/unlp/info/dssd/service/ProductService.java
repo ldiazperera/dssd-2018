@@ -52,7 +52,7 @@ public class ProductService implements BasicService<Product>{
 
 	@Override
 	@Transactional
-	public Product create(Product product) {
+	public Product save(Product product) {
 		return this.productRepository.save(product);
 	}
 	
@@ -62,18 +62,24 @@ public class ProductService implements BasicService<Product>{
 		Optional<ProductType> pt = this.productTypeRepository.findById(product.getProductType());
 		if (pt.isPresent()) {
 			prod.setProductType(pt.get());
-			return this.create(prod);
+			return this.save(prod);
 		}else {
 			throw new NoElementFoundException(TYPE_RESOURCE, Long.toString(product.getProductType()));
 		}
 	}
 
-	@Override
 	@Transactional
-	public Product update(String id, Product product) throws NoElementFoundException {
+	public Product update(String id, ProductDTO product) throws NoElementFoundException{
+		Product prod = new Product(product);
 		if (this.productRepository.existsById(Long.parseLong(id))) {
-			product.setId(Long.parseLong(id));
-			return this.productRepository.save(product);
+			prod.setId(Long.parseLong(id));
+			Optional<ProductType> pt = this.productTypeRepository.findById(product.getProductType());
+			if (pt.isPresent()) {
+				prod.setProductType(pt.get());
+				return this.save(prod);
+			}else {
+				throw new NoElementFoundException(TYPE_RESOURCE, Long.toString(product.getProductType()));
+			}
 		}else{
 			throw new NoElementFoundException(RESOURCE, id);
 		}
