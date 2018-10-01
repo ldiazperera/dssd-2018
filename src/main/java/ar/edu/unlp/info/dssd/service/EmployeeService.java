@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unlp.info.dssd.exceptions.NoElementFoundException;
 import ar.edu.unlp.info.dssd.model.Employee;
 import ar.edu.unlp.info.dssd.model.EmployeeType;
 import ar.edu.unlp.info.dssd.model.dto.EmployeeDTO;
@@ -15,6 +16,9 @@ import ar.edu.unlp.info.dssd.repository.EmployeeTypeRepository;
 
 @Service
 public class EmployeeService implements BasicService<Employee> {
+	
+	private static final String RESOURCE = "Empleado";
+	private static final String TYPE_RESOURCE = "Tipo de Empleado";
 	
 	@Autowired
 	private EmployeeRepository repository;
@@ -30,14 +34,22 @@ public class EmployeeService implements BasicService<Employee> {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Optional<Employee> getById(String id) {
-		return this.repository.findById(Long.parseLong(id));
+	public Employee getById(String id) throws NoElementFoundException {
+		Optional<Employee> employee = this.repository.findById(Long.parseLong(id));
+		if (employee.isPresent()) {
+			return employee.get();
+		}else{
+			throw new NoElementFoundException(RESOURCE, id);
+		}
 	}
 
 	@Override
 	@Transactional
-	public void deleteById(String id) {
-		this.repository.deleteById(Long.parseLong(id));
+	public void deleteById(String id) throws NoElementFoundException {
+		if(this.repository.existsById(Long.parseLong(id)))
+			this.repository.deleteById(Long.parseLong(id));
+		else
+			throw new NoElementFoundException(RESOURCE, id);
 	}
 
 	@Override
@@ -46,24 +58,26 @@ public class EmployeeService implements BasicService<Employee> {
 	}
 	
 	@Transactional
-	public Employee create(EmployeeDTO employee) {
+	public Employee create(EmployeeDTO employee) throws NoElementFoundException {
 		Employee emp = new Employee(employee);
 		Optional<EmployeeType> et = this.employeeTypeRepository.findById(employee.getEmployeeType());
 		if (et.isPresent()) {
 			emp.setEmployeeType(et.get());
 			return this.create(emp);
+		}else {
+			throw new NoElementFoundException(TYPE_RESOURCE, Long.toString(employee.getEmployeeType()));
 		}
-		return null;
 	}
 
 	@Override
 	@Transactional
-	public Employee update(String id, Employee employee) {
+	public Employee update(String id, Employee employee) throws NoElementFoundException {
 		if (this.repository.existsById(Long.parseLong(id))) {
 			employee.setId(Long.parseLong(id));
 			return this.repository.save(employee);
+		}else {
+			throw new NoElementFoundException(RESOURCE, id);
 		}
-		return null;
 	}
 	
 	@Override

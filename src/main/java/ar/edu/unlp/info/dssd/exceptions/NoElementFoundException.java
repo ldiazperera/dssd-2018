@@ -1,25 +1,29 @@
 package ar.edu.unlp.info.dssd.exceptions;
 
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.http.HttpStatus;
+import java.text.MessageFormat;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Elemento no encontrado")
 public class NoElementFoundException extends Exception {
+	
+	private static final  String MESSAGE = "Elemento no encontrado";
+	
+	private static final String DETAILED_MESSAGE = "El {0} {1} no fue encontrado";
+
+	private static final long serialVersionUID = 3761851172069238056L;
 
 	public NoElementFoundException() {
-		super();
+		super(MESSAGE);
 	}
-
-	public NoElementFoundException(String message, Throwable cause) {
-		super(message, cause);
+	
+	public NoElementFoundException(String resource, String elem) {
+		super(MessageFormat.format(DETAILED_MESSAGE, resource, elem));
 	}
-
-	public NoElementFoundException(String message) {
-		super(message);
+	
+	public NoElementFoundException(String resource, String elem, Throwable cause) {
+		super(MessageFormat.format(DETAILED_MESSAGE, resource, elem), cause);
 	}
 
 	public NoElementFoundException(Throwable cause) {
-		super(cause);
+		super(MESSAGE,cause);
 	}
 
 }

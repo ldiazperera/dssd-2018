@@ -17,6 +17,9 @@ import ar.edu.unlp.info.dssd.repository.ProductTypeRepository;
 @Service
 public class ProductService implements BasicService<Product>{
 	
+	private static final String RESOURCE = "Producto";
+	private static final String TYPE_RESOURCE = "Tipo de Producto";
+	
 	@Autowired
 	private ProductRepository productRepository;
 	
@@ -29,21 +32,22 @@ public class ProductService implements BasicService<Product>{
 	}
 	
 	@Transactional(readOnly = true)
-	public Optional<Product> getById(String id) throws NoElementFoundException {
+	public Product getById(String id) throws NoElementFoundException {
 		Optional<Product> product = this.productRepository.findById(Long.parseLong(id));
 		if (product.isPresent())
-				return product ;
+				return product.get();
 		else
-			throw new NoElementFoundException("Elemento no encontrado");
+			throw new NoElementFoundException(RESOURCE, id);
 	}
 
 	@Override
 	@Transactional
 	public void deleteById(String id) throws NoElementFoundException {
-		if(this.productRepository.findById(Long.parseLong(id)).isPresent())
+		if(this.productRepository.existsById(Long.parseLong(id))) {
 			this.productRepository.deleteById(Long.parseLong(id));
-		else
-			throw new NoElementFoundException("Elemento no encontrado");
+		}else {
+			throw new NoElementFoundException(RESOURCE, id);
+		}
 	}
 
 	@Override
@@ -53,14 +57,15 @@ public class ProductService implements BasicService<Product>{
 	}
 	
 	@Transactional
-	public Product create(ProductDTO product) {
+	public Product create(ProductDTO product) throws NoElementFoundException {
 		Product prod = new Product(product);
 		Optional<ProductType> pt = this.productTypeRepository.findById(product.getProductType());
 		if (pt.isPresent()) {
 			prod.setProductType(pt.get());
 			return this.create(prod);
+		}else {
+			throw new NoElementFoundException(TYPE_RESOURCE, Long.toString(product.getProductType()));
 		}
-		return null;
 	}
 
 	@Override
@@ -70,7 +75,7 @@ public class ProductService implements BasicService<Product>{
 			product.setId(Long.parseLong(id));
 			return this.productRepository.save(product);
 		}else{
-			throw new NoElementFoundException("Elemento no encontrado");
+			throw new NoElementFoundException(RESOURCE, id);
 		}
 	}
 

@@ -40,19 +40,16 @@ public class ProductController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Product> getProductById(@PathVariable String id) throws NoElementFoundException {
-		return this.service.getById(id)
-				.map(product -> new ResponseEntity<>(product, HttpStatus.OK))
-				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+		return new ResponseEntity<>(this.service.getById(id),HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductDTO product, BindingResult bindingResult) {
+	public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductDTO product, BindingResult bindingResult) throws NoElementFoundException {
 		if (bindingResult.hasErrors()) {
 			LOGGER.error(ARGUMENTS_MISSING_ERROR);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		this.service.create(product); 
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return new ResponseEntity<>(this.service.create(product), HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -66,5 +63,11 @@ public class ProductController {
 		this.service.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+    @ExceptionHandler(NoElementFoundException.class)
+    public ResponseEntity <String> exception(Exception ex) {
+        LOGGER.error(ex.getMessage(), ex);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 	
 }
