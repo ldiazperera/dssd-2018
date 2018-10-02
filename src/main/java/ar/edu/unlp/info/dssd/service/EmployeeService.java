@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableMBeanExport;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +34,16 @@ public class EmployeeService implements BasicService<Employee> {
 	@Transactional(readOnly = true)
 	public Optional<Employee> getById(String id) {
 		return this.repository.findById(Long.parseLong(id));
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Employee> getBy(String firstname, String surname, String email, Long id) {
+		Employee anEmployee = new Employee();
+		anEmployee.setEmail(email);
+		anEmployee.setFirstname(firstname);
+		anEmployee.setId(id);
+		anEmployee.setSurname(surname);
+		return this.repository.findAll(Example.of(anEmployee));
 	}
 
 	@Override

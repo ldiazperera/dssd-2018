@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlp.info.dssd.exceptions.NoElementFoundException;
+import ar.edu.unlp.info.dssd.model.Employee;
 import ar.edu.unlp.info.dssd.model.Product;
 import ar.edu.unlp.info.dssd.model.ProductType;
 import ar.edu.unlp.info.dssd.model.dto.ProductDTO;
@@ -35,6 +37,16 @@ public class ProductService implements BasicService<Product>{
 				return product ;
 		else
 			throw new NoElementFoundException("Elemento no encontrado");
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Product> getBy(String name, Double costprice, Double saleprice, Long id) {
+		Product aProduct = new Product();
+		aProduct.setCostprice(costprice);
+		aProduct.setId(id);
+		aProduct.setName(name);
+		aProduct.setSaleprice(saleprice);
+		return this.productRepository.findAll(Example.of(aProduct));
 	}
 
 	@Override
