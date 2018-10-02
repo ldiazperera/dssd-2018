@@ -14,6 +14,9 @@ public class ProductDTO {
 	@NotBlank
 	private Double saleprice;
 	
+	@NotBlank
+	private Integer stock;
+	
 	@NotNull
 	private long productType;
 
@@ -39,6 +42,14 @@ public class ProductDTO {
 
 	public void setSaleprice(Double saleprice) {
 		this.saleprice = saleprice;
+	}
+
+	public Integer getStock() {
+		return stock;
+	}
+
+	public void setStock(Integer stock) {
+		this.stock = stock;
 	}
 
 	public long getProductType() {

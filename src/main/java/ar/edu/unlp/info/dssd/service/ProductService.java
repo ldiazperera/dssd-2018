@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +31,8 @@ public class ProductService implements BasicService<Product>{
 	private ProductTypeRepository productTypeRepository;
 	
 	@Transactional(readOnly = true)
-	public List<Product> getAll(){
-		return this.productRepository.findAll();
+	public Page<Product> getAll(Pageable pageable){
+		return this.productRepository.findAll(pageable);
 	}
 	
 	@Transactional(readOnly = true)

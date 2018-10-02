@@ -1,12 +1,15 @@
 package ar.edu.unlp.info.dssd.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,8 +36,8 @@ public class ProductController {
 	private ProductService service;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Product>> getProducts() {
-		return new ResponseEntity<>(this.service.getAll(), HttpStatus.OK);
+	public ResponseEntity<Page<Product>> getProducts(@PathVariable("page") Optional<String> page, @PathVariable("size") Optional<String> size, @PathVariable("sort") Optional<String> sort, Pageable pageable) {
+		return new ResponseEntity<>(this.service.getAll(pageable), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

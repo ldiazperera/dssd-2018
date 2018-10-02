@@ -26,6 +26,9 @@ public class Product {
 	@Column(name="sale_price", nullable = false)
 	private Double saleprice;
 	
+	@Column(name="stock", nullable = false)
+	private Integer stock;
+	
 	@ManyToOne
 	@JoinColumn(name="product_type_fk")
 	private ProductType productType;
@@ -70,6 +73,14 @@ public class Product {
 
 	public void setSaleprice(Double saleprice) {
 		this.saleprice = saleprice;
+	}
+
+	public Integer getStock() {
+		return stock;
+	}
+
+	public void setStock(Integer stock) {
+		this.stock = stock;
 	}
 
 	public ProductType getProductType() {

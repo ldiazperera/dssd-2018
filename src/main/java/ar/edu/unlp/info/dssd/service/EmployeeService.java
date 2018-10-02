@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +33,8 @@ public class EmployeeService implements BasicService<Employee> {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Employee> getAll(){
-		return this.repository.findAll();
+	public Page<Employee> getAll(Pageable pageable){
+		return this.repository.findAll(pageable);
 	}
 	
 	@Override
