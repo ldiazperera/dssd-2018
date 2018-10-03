@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlp.info.dssd.exceptions.NoElementFoundException;
-import ar.edu.unlp.info.dssd.model.Employee;
 import ar.edu.unlp.info.dssd.model.Product;
 import ar.edu.unlp.info.dssd.model.ProductType;
 import ar.edu.unlp.info.dssd.model.dto.ProductDTO;
