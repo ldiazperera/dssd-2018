@@ -41,6 +41,7 @@ public class Product {
 		this.name = product.getName();
 		this.costprice = product.getCostprice();
 		this.saleprice = product.getSaleprice();
+		this.stock = product.getStock();
 	}
 
 	public Long getId() {
