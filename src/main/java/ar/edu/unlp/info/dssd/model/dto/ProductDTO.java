@@ -8,13 +8,13 @@ public class ProductDTO {
 	@NotBlank
 	private String name;
 	
-	@NotBlank
+	@NotNull
 	private Double costprice;
 
-	@NotBlank
+	@NotNull
 	private Double saleprice;
 	
-	@NotBlank
+	@NotNull
 	private Integer stock;
 	
 	@NotNull
