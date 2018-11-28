@@ -20,7 +20,7 @@ import ar.edu.unlp.info.dssd.model.dto.LoginDTO;
 import ar.edu.unlp.info.dssd.service.SessionService;
 
 @Controller
-@RequestMapping(value = "/sessions")
+@RequestMapping(value = "/sessions" , produces={"application/json"} , consumes= {"text/plain"})
 public class SessionController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(SessionController.class);
