@@ -9,13 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ar.edu.unlp.info.dssd.exceptions.CredentialsException;
 import ar.edu.unlp.info.dssd.exceptions.MissingArgumentException;
-import ar.edu.unlp.info.dssd.exceptions.NoElementFoundException;
 import ar.edu.unlp.info.dssd.model.dto.LoginDTO;
 import ar.edu.unlp.info.dssd.service.SessionService;
 
@@ -28,22 +29,25 @@ public class SessionController {
 	@Autowired
 	private SessionService service;
 	
+	@CrossOrigin
 	@RequestMapping(value = "/login",method = RequestMethod.POST)
-	public ResponseEntity<Void> login(@RequestBody @Valid LoginDTO login, BindingResult bindingResult) throws NoElementFoundException, MissingArgumentException {
+	public ResponseEntity<Long> login(@RequestBody @Valid LoginDTO login, BindingResult bindingResult) throws MissingArgumentException, CredentialsException {
 		if (bindingResult.hasErrors()) {
 			throw new MissingArgumentException();
 		}
-		
-		if (this.service.login(login)) {
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<>(this.service.login(login), HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(MissingArgumentException.class)
     public ResponseEntity <String> missingArgumentException(Exception ex) {
         LOGGER.error(ex.getMessage(), ex);
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+	
+	@ExceptionHandler(CredentialsException.class)
+    public ResponseEntity <String> badCreedentialsException(Exception ex) {
+        LOGGER.error(ex.getMessage(), ex);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
 }
