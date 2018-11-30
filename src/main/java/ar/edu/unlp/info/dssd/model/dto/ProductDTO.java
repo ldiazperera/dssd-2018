@@ -19,6 +19,8 @@ public class ProductDTO {
 	
 	@NotNull
 	private long productType;
+	
+	private String imageUrl;
 
 	public String getName() {
 		return name;
@@ -58,6 +60,14 @@ public class ProductDTO {
 
 	public void setProductType(long productType) {
 		this.productType = productType;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	
 }

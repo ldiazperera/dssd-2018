@@ -29,6 +29,9 @@ public class Product {
 	@Column(name="stock", nullable = false)
 	private Integer stock;
 	
+	@Column(name = "image_url")
+	private String img;
+	
 	@ManyToOne
 	@JoinColumn(name="product_type_fk")
 	private ProductType productType;
@@ -42,6 +45,7 @@ public class Product {
 		this.costprice = product.getCostprice();
 		this.saleprice = product.getSaleprice();
 		this.stock = product.getStock();
+		this.img = product.getImageUrl();
 	}
 
 	public Long getId() {
@@ -92,4 +96,12 @@ public class Product {
 		this.productType = productType;
 	}
 
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String imageUrl) {
+		this.img = imageUrl;
+	}
+	
 }
