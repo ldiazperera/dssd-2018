@@ -1,7 +1,5 @@
 package ar.edu.unlp.info.dssd.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlp.info.dssd.exceptions.NoElementFoundException;
 import ar.edu.unlp.info.dssd.model.Product;
 import ar.edu.unlp.info.dssd.model.Purchase;
-import ar.edu.unlp.info.dssd.model.dto.ItemDTO;
 import ar.edu.unlp.info.dssd.model.dto.PurchaseDTO;
 import ar.edu.unlp.info.dssd.repository.PurchaseRepository;
 
@@ -24,20 +21,19 @@ public class PurchaseService {
 	
 	@Transactional
 	public void buyItems(PurchaseDTO purchaseDto) throws NoElementFoundException {
-		List<ItemDTO> items = purchaseDto.getItems();
 		Purchase purchase = new Purchase();
+		Product product = this.service.getById(purchaseDto.getItem().toString());
+		purchase.setDiscount(purchaseDto.getDiscount());
 		purchase.setBuyer(purchaseDto.getUsername());
-		purchase.setItems(items.size());
-		for(ItemDTO item : items) {
-			this.updateProduct(item);
-		}
+		purchase.setAmount(purchaseDto.getAmount());
+		purchase.setProduct(product);
+		this.updateProduct(product);
 		this.repository.save(purchase);
 	}
 
 
-	private void updateProduct(ItemDTO item) throws NoElementFoundException {
-		Product product = this.service.getById(item.getId());
-		Integer newStock = product.getStock() - item.getAmount();
+	private void updateProduct(Product product) throws NoElementFoundException {
+		Integer newStock = product.getStock() - 1;
 		product.setStock(newStock);
 		this.service.save(product);
 	}

@@ -1,10 +1,14 @@
 package ar.edu.unlp.info.dssd.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Purchase {
@@ -16,8 +20,15 @@ public class Purchase {
 	@Column(name = "buyer", nullable = false)
 	private String buyer;
 	
-	@Column(name = "items", nullable = false)
-	private Integer items;
+	@Column(name = "discount", nullable = false)
+	private BigDecimal discount;
+	
+	@Column(name = "amount", nullable = false)
+	private BigDecimal amount;
+	
+	@ManyToOne
+	@JoinColumn(name="product_fk")
+	private Product product;
 	
 	public Purchase() {
 		//Default constructor
@@ -39,12 +50,28 @@ public class Purchase {
 		this.buyer = buyer;
 	}
 
-	public Integer getItems() {
-		return items;
+	public BigDecimal getDiscount() {
+		return discount;
 	}
 
-	public void setItems(Integer items) {
-		this.items = items;
+	public void setDiscount(BigDecimal discount) {
+		this.discount = discount;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
 	}
 	
 }

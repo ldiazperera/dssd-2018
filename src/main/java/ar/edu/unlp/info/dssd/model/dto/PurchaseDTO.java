@@ -1,6 +1,6 @@
 package ar.edu.unlp.info.dssd.model.dto;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
@@ -10,7 +10,13 @@ public class PurchaseDTO {
 	private String username;
 	
 	@NotNull
-	private List<ItemDTO> items;
+	private Long item;
+	
+	@NotNull
+	private BigDecimal discount;
+	
+	@NotNull
+	private BigDecimal amount;
 
 	public String getUsername() {
 		return username;
@@ -20,16 +26,28 @@ public class PurchaseDTO {
 		this.username = username;
 	}
 
-	public List<ItemDTO> getItems() {
-		return items;
+	public Long getItem() {
+		return item;
 	}
 
-	public void setItems(List<ItemDTO> items) {
-		this.items = items;
+	public BigDecimal getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(BigDecimal discount) {
+		this.discount = discount;
+	}
+
+	public void setItem(Long item) {
+		this.item = item;
 	}
 	
-	
-	
-	
+	public BigDecimal getAmount() {
+		return amount;
+	}
 
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+	
 }
