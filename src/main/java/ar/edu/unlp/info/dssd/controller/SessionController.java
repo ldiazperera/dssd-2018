@@ -29,7 +29,7 @@ public class SessionController {
 	@Autowired
 	private SessionService service;
 	
-	@CrossOrigin
+	@CrossOrigin(origins = "http://localhost:8000")
 	@RequestMapping(value = "/login",method = RequestMethod.POST)
 	public ResponseEntity<Long> login(@RequestBody @Valid LoginDTO login, BindingResult bindingResult) throws MissingArgumentException, CredentialsException {
 		if (bindingResult.hasErrors()) {
