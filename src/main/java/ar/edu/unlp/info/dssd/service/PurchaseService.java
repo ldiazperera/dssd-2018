@@ -14,6 +14,7 @@ import ar.edu.unlp.info.dssd.repository.PurchaseRepository;
 @Service
 public class PurchaseService {
 	
+	@Autowired
 	private PurchaseRepository repository;
 	
 	@Autowired
