@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +28,6 @@ public class SessionController {
 	@Autowired
 	private SessionService service;
 	
-	@CrossOrigin
 	@RequestMapping(value = "/login",method = RequestMethod.POST)
 	public ResponseEntity<Long> login(@RequestBody @Valid LoginDTO login, BindingResult bindingResult) throws MissingArgumentException, CredentialsException {
 		if (bindingResult.hasErrors()) {
