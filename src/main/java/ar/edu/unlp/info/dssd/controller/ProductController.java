@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +34,8 @@ public class ProductController {
 
 	@Autowired
 	private ProductService service;
-
+	
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Product>> getProducts(@PathVariable("page") Optional<String> page, @PathVariable("size") Optional<String> size, @PathVariable("sort") Optional<String> sort, Pageable pageable) {
 		return new ResponseEntity<>(this.service.getAll(pageable), HttpStatus.OK);

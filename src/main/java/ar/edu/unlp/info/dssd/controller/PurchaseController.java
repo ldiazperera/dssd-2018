@@ -20,7 +20,7 @@ import ar.edu.unlp.info.dssd.model.dto.PurchaseDTO;
 import ar.edu.unlp.info.dssd.service.PurchaseService;
 
 @Controller
-@RequestMapping(value = "/purhcase")
+@RequestMapping(value = "/purchase")
 public class PurchaseController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(PurchaseController.class);
